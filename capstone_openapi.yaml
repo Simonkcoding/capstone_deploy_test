@@ -1,0 +1,590 @@
+openapi: 3.0.0
+info:
+  title: U1 Capstone
+  description:
+    REST inventory management web service for a Video Game Store
+  version: 0.0.1
+servers:
+  - url: 'http://localhost:8080'
+    description: Local dev server
+paths: 
+
+#=========== Game ============= 
+  /game:
+    post:
+      summary: Creates a new game entry with the given information
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Game'
+      responses:
+        '201':
+          description: A game view model
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Game'
+        '400':
+          description: Invalid request syntax.
+        '422':
+          description: Incomplete game information. Some required fields missing.
+    
+    get:
+      summary: get all games
+      responses:
+        '200':
+          description: Generate a list of gameviewModel
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/Game'
+    
+  /game/{gameId}:
+    get:
+      summary: get game by id
+      parameters: 
+        - name: gameId
+          in: path
+          required: true
+          description: id of the game
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+      responses:
+        '200':
+          description: Generate a customer JSON object.
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/Game'
+               
+    put:
+      summary: Updated the entry for the game with the given ID.
+      parameters: 
+        - name: gameId
+          in: path
+          required: true
+          description: ID of the game you would like to update.
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Game'
+      responses:
+        '200':
+          description: game successfully updated.
+        '422':
+          description: game ID on path must match the ID in the game view model object.
+    
+    delete:
+      summary: Deletes the entry for the game with the given ID.
+      parameters: 
+        - name: gameId
+          in: path
+          required: true
+          description: ID of the game you would like to delete.
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+      responses:
+        '200':
+          description: game successfully deleted. 
+
+  /game/studio/{studio}:
+    get:
+      summary: get game by studio
+      parameters: 
+        - name: studio
+          in: path
+          required: true
+          description: studio of the game
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Generate a game JSON object.
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/Game'
+               
+  /game/esrb/{esrb}:
+    get:
+      summary: get game by esrb
+      parameters: 
+        - name: esrb
+          in: path
+          required: true
+          description: esrb of the game
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Generate a game JSON object.
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/Game'
+               
+  /game/title/{title}:
+    get:
+      summary: get game by title
+      parameters: 
+        - name: title
+          in: path
+          required: true
+          description: title of the game
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Generate a game JSON object.
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/Game'
+          
+#============ Console ==============   
+
+  /console:
+    post:
+      summary: Creates a new console entry with the given information
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Console'
+      responses:
+        '201':
+          description: A console view model
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Console'
+        '400':
+          description: Invalid request syntax.
+        '422':
+          description: Incomplete console information. Some required fields missing.
+    
+    get:
+      summary: get all consoles
+      responses:
+        '200':
+          description: Generate a list of consoleviewModel
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/Console'
+
+  /console/{consoleId}:
+    get:
+      summary: get console by id
+      parameters: 
+        - name: consoleId
+          in: path
+          required: true
+          description: id of the console
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+      responses:
+        '200':
+          description: Generate a customer JSON object.
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/Console'
+               
+    put:
+      summary: Updated the entry for the console with the given ID.
+      parameters: 
+        - name: consoleId
+          in: path
+          required: true
+          description: ID of the console you would like to update.
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Console'
+      responses:
+        '200':
+          description: console successfully updated.
+        '422':
+          description: console ID on path must match the ID in the console view model object.
+    
+    delete:
+      summary: Deletes the entry for the console with the given ID.
+      parameters: 
+        - name: consoleId
+          in: path
+          required: true
+          description: ID of the console you would like to delete.
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+      responses:
+        '200':
+          description: console successfully deleted. 
+
+  /console/mfg/{mfg}:
+    get:
+      summary: get console by manufacturer
+      parameters: 
+        - name: mfg
+          in: path
+          required: true
+          description: manufacturer of console
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Generate a conosle JSON object.
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/Console'
+
+#========= T shirt ========
+
+  /tshirt:
+    post:
+      summary: Creates a new tshirt entry with the given information
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tshirt'
+      responses:
+        '201':
+          description: A tshirt view model
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tshirt'
+        '400':
+          description: Invalid request syntax.
+        '422':
+          description: Incomplete tshirt information. Some required fields missing.
+    
+    get:
+      summary: get all tshirts
+      responses:
+        '200':
+          description: Generate a list of tshirtviewModel
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/Tshirt'
+    
+  /tshirt/{tshirtId}:
+    get:
+      summary: get tshirt by id
+      parameters: 
+        - name: tshirtId
+          in: path
+          required: true
+          description: id of the tshirt
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+      responses:
+        '200':
+          description: Generate a customer JSON object.
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/Tshirt'
+               
+    put:
+      summary: Updated the entry for the tshirt with the given ID.
+      parameters: 
+        - name: tshirtId
+          in: path
+          required: true
+          description: ID of the tshirt you would like to update.
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tshirt'
+      responses:
+        '200':
+          description: tshirt successfully updated.
+        '422':
+          description: tshirt ID on path must match the ID in the tshirt view model object.
+    
+    delete:
+      summary: Deletes the entry for the tshirt with the given ID.
+      parameters: 
+        - name: tshirtId
+          in: path
+          required: true
+          description: ID of the tshirt you would like to delete.
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+      responses:
+        '200':
+          description: tshirt successfully deleted.
+
+  /tshirt/color/{color}:
+    get:
+      summary: get tshirt by color
+      parameters: 
+        - name: color
+          in: path
+          required: true
+          description: color of the tshirt
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Generate a customer JSON object.
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/Tshirt' 
+               
+  /tshirt/size/{size}:
+    get:
+      summary: get tshirt by size
+      parameters: 
+        - name: size
+          in: path
+          required: true
+          description: size of the tshirt
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Generate a customer JSON object.
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/Tshirt' 
+          
+#==========invoice==========
+
+  /purchase:
+    post:
+      summary: Creates a new invoice entry with the given information
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Purchase'
+      responses:
+        '201':
+          description: A invoice view model
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Purchase'
+        '400':
+          description: Invalid request syntax.
+        '422':
+          description: Incomplete invoice information. Some required fields missing.
+    
+    get:
+      summary: get all invoices
+      responses:
+        '200':
+          description: Generate a list of invoiceviewModel
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/Purchase'
+    
+  /purchase/{purchaseId}:
+    get:
+      summary: get purchase by id
+      parameters: 
+        - name: purchaseId
+          in: path
+          required: true
+          description: id of the purchase
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+      responses:
+        '200':
+          description: Generate a purchase JSON object.
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/Purchase'
+               
+    put:
+      summary: Updated the entry for the purchase with the given ID.
+      parameters: 
+        - name: purchaseId
+          in: path
+          required: true
+          description: ID of the purchase you would like to update.
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Purchase'
+      responses:
+        '200':
+          description: purchase successfully updated.
+        '422':
+          description: purchase ID on path must match the ID in the invoice view model object.
+    
+    delete:
+      summary: Deletes the entry for the invoice with the given ID.
+      parameters: 
+        - name: purchaseId
+          in: path
+          required: true
+          description: ID of the invoice you would like to delete.
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+      responses:
+        '200':
+          description: purchase successfully deleted.
+          
+#==========Schema==============
+
+components:
+  schemas:
+    Game: 
+      properties:
+        gameId:
+          type: integer
+        title:
+          type: string
+        esrbRating:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+        studio:
+          type: string
+        quantity:
+          type: number
+      required:
+          - gameId
+          - title
+          - esrbRating
+          - description
+          - price
+          - studio
+
+    Console: 
+      properties:
+        consoleId:
+          type: integer
+        model:
+          type: string
+        manufacturer:
+          type: string
+        memory:
+          type: string
+        processor:
+          type: string
+        price:
+          type: number
+        quantity:
+          type: number
+      required:
+          - consoleId
+          - model
+          - manufacturer
+          - price
+          - quantity
+
+    Tshirt: 
+      properties:
+        tshirtId:
+          type: integer
+        size:
+          type: string
+        color:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+        quantity:
+          type: number
+      required:
+          - tshirtId
+          - size
+          - color
+          - description
+          - price
+          - quantity
+          
+    Purchase: 
+      properties:
+        invoiceId:
+          type: integer
+        name:
+          type: string
+        street:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        itemType:       # game/ console/ tshirt
+          type: string
+        itemId:          #from Dao: tshirt/game/cosole, depending on itemType
+          type: object
+        quantity:       
+          type: number
+      required:
+        - invoiceId
+        - name
+        - city
+        - state
+        - item
+        - quantity
+
+
